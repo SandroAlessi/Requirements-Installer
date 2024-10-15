@@ -25,4 +25,4 @@ Stelle sicher, dass du Python und `pip` installiert hast. Falls du `tkinter` nic
 1. Starte das Skript mit Python:
 
    ```bash
-   python scriptname.py
+   python requirements_install.py
