@@ -25,4 +25,33 @@ Stelle sicher, dass du Python und `pip` installiert hast. Falls du `tkinter` nic
 1. Starte das Skript mit Python:
 
    ```bash
-   python requirements_install.py
+   python requirements-install.py
+
+2. Der Explorer wird sich öffnen, in dem du die Datei (`Pythonskript` oder `requirements.txt`) auswählen kannst.
+   Du kannst auch mehrere Dateien auswählen. Diese werden automatisch nacheinander bearbeitet.
+
+3. Das Skript wird nun damit beginnen, alle nötigen Bibliotheken nachzuinstallieren.
+
+## Dateitypen
+
+Das Skript unterstützt folgende Dateitypen:
+
+- `Python-Skripte (.py)`: Es analysiert die Datei und extrahiert alle importierten Module.
+- `requirements.txt`: Es liest die Datei und extrahiert die dort aufgelisteten Pakete.
+
+## Fehlertoleranz
+
+- Das Skript verwendet einen Retry-Mechanismus bei der Installation von Paketen, der die Installation nach einem Fehler bis zu dreimal wiederholt.
+- Es werden Netzwerkprobleme, Berechtigungsfehler und systemweite Abhängigkeiten wie `pg_config` und `gcc` erkannt und die entsprechenden Fehlermeldungen angezeigt.
+
+## Wichtige Funktionen
+
+- Import-Extraktion: Das Skript verwendet das `ast`-Modul, um alle `import`- und `from ... import`-Anweisungen aus Python-Dateien zu analysieren.
+- Paketerkennung: Überprüft mithilfe von `importlib` und `metadata`, ob eine Bibliothek bereits installiert ist.
+- Installation: Fehlende Pakete werden automatisch installiert, falls sie nicht gefunden werden.
+- Paketverwaltung: Es wird eine rudimentäre Verwaltung der Installationsversuche verwendet, um bei Fehlern eine exponentielle Verzögerung zwischen den Versuchen zu ermöglichen.
+
+## Bekannte Einschränkungen
+
+Das Skript erkennt nicht automatisch, ob Bibliotheken spezielle Systemabhängigkeiten benötigen (z. B. C-Compiler).
+Bei sehr großen `requirements.txt`-Dateien kann die Verarbeitung länger dauern.
