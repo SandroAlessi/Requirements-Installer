@@ -1,0 +1,69 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; Registry-Einträge für Windows Kontextmenü
+; Zweck: Fügt "Python-Abhängigkeiten installieren" zum Rechtsklickmenü hinzu
+;        für .py, .pyw und requirements.txt Dateien.
+; Autor: Sandro Alessi (GitHub: SandroAlessi)
+; Version: 2.0.0 (Deutsch)
+;
+; WICHTIGE HINWEISE VOR DEM IMPORT:
+; 1. PFADE ÜBERPRÜFEN: Stellen Sie sicher, dass der Pfad zum Python-Launcher
+;    (Standard: "py.exe") und der Pfad zum Skript 'requirements_install.py'
+;    (Standard: "C:\\Skripte\\requirements_install.py") für Ihr Zielsystem korrekt sind.
+;    PASSEN SIE DIESE PFADE HIER UNTEN GGF. AN, bevor Sie die .reg-Datei importieren!
+;    Verwenden Sie doppelte Backslashes (\\) für Pfadtrennzeichen in .reg-Dateien.
+; 2. PYTHON LAUNCHER ("py.exe"): Empfohlen unter Windows, da es die korrekte
+;    Python-Version findet. Falls nicht verfügbar oder gewünscht, ersetzen Sie
+;    "py.exe" durch den vollständigen Pfad zu Ihrer python.exe
+;    (z.B. "C:\\Python311\\python.exe").
+; 3. SKRIPT-PFAD: Muss exakt auf den Installationsort von 'requirements_install.py' zeigen.
+; ==============================================================================
+
+
+; --- Kontextmenü für .py Dateien ---
+; HKEY_CLASSES_ROOT\SystemFileAssociations\.py              -> Gilt für alle .py Dateien
+; HKEY_CLASSES_ROOT\SystemFileAssociations\.py\shell        -> Ort für Shell-Erweiterungen (Kontextmenü)
+; HKEY_CLASSES_ROOT\SystemFileAssociations\.py\shell\InstallierePythonAbhaengigkeiten -> Eindeutiger Schlüsselname für diesen Eintrag
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.py\shell\InstallierePythonAbhaengigkeiten]
+; @="" -> Der Text, der im Kontextmenü angezeigt wird
+@="Python-Abhängigkeiten installieren"
+; Optional: "Icon"-Wert, um ein Symbol anzuzeigen (Pfad muss gültig sein!)
+; "Icon"="C:\\Pfad\\zum\\PythonIcon.ico,0"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.py\shell\InstallierePythonAbhaengigkeiten\command]
+; @="" -> Das auszuführende Kommando
+; "py.exe"                     -> Python-Launcher (Standardwert aus Config)
+; "C:\\Skripte\\..."           -> Pfad zum Skript (Standardwert aus Config, Backslashes verdoppelt!)
+; "-y"                         -> Argument, um Bestätigung im Skript zu überspringen
+; "\"%1\""                     -> Platzhalter für den vollständigen Pfad der angeklickten Datei (in Anführungszeichen)
+@="\"py.exe\" \"C:\\Skripte\\requirements_install.py\" -y \"%1\""
+
+
+; --- Kontextmenü für .pyw Dateien ---
+; Struktur identisch zu .py, nur anderer Registrierungspfad
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.pyw\shell\InstallierePythonAbhaengigkeiten]
+@="Python-Abhängigkeiten installieren"
+; "Icon"="C:\\Pfad\\zum\\PythonIcon.ico,0"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.pyw\shell\InstallierePythonAbhaengigkeiten\command]
+@="\"py.exe\" \"C:\\Skripte\\requirements_install.py\" -y \"%1\""
+
+
+; --- Kontextmenü NUR für "requirements.txt" Dateien ---
+; HKEY_CLASSES_ROOT\*                           -> Gilt potenziell für alle Dateitypen (*)
+; HKEY_CLASSES_ROOT\*\shell                     -> Ort für Shell-Erweiterungen
+; HKEY_CLASSES_ROOT\*\shell\InstallierePythonAbhaengigkeiten -> Eindeutiger Schlüsselname
+
+[HKEY_CLASSES_ROOT\*\shell\InstallierePythonAbhaengigkeiten]
+@="Python-Abhängigkeiten installieren"
+; "Icon"="C:\\Pfad\\zum\\ReqIcon.ico,0"
+; "AppliesTo"                   -> WICHTIG: Beschränkt diesen Eintrag auf Dateien,
+;                                  deren Name exakt "requirements.txt" ist.
+;                                  (System.FileName prüft den vollständigen Namen)
+"AppliesTo"="System.FileName:=\"requirements.txt\""
+
+[HKEY_CLASSES_ROOT\*\shell\InstallierePythonAbhaengigkeiten\command]
+; Kommando ist identisch zu den anderen Einträgen
+@="\"py.exe\" \"C:\\Skripte\\requirements_install.py\" -y \"%1\""
