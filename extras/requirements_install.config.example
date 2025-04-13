@@ -1,0 +1,29 @@
+[Pfade]
+# Pfad zum Python-Launcher (unter Windows meist py.exe oder python.exe)
+python_launcher = py.exe
+
+# Optional: Standardpfad zum Skript für Kontextmenü oder Logging
+standard_skript_pfad = C:\Skripte\requirements_install.py
+
+# Optional: JSON-Datei mit benutzerdefiniertem Import→Paket-Mapping
+mapping_datei = mapping.json
+
+[Verhalten]
+# Anzahl der maximalen Wiederholungen bei Paket- oder Requirements-Installation
+wiederholungen = 3
+
+# Logging-Level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+log_level = INFO
+
+# Ob beim Start automatisch geprüft werden soll, ob pip veraltet ist
+pip_upgrade_pruefen = True
+
+[Zeitlimits]
+# Timeout für die Installation eines einzelnen Pakets (in Sekunden)
+timeout_installation = 90
+
+# Timeout für das Verarbeiten einer requirements.txt (in Sekunden)
+timeout_requirements = 300
+
+# Timeout für ein pip self-upgrade (in Sekunden)
+timeout_pip_upgrade = 60
