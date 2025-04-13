@@ -1,0 +1,17 @@
+{
+  "cv2": "opencv-python",
+  "yaml": "PyYAML",
+  "bs4": "beautifulsoup4",
+  "PIL": "Pillow",
+  "skimage": "scikit-image",
+  "sklearn": "scikit-learn",
+  "Crypto": "pycryptodome",
+  "Image": "Pillow",
+  "lxml": "lxml",
+  "tensorflow": "tensorflow",
+  "keras": "keras",
+  "flask": "Flask",
+  "django": "Django",
+  "requests": "requests",
+  "urllib3": "urllib3"
+}
